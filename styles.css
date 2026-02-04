@@ -1,69 +1,66 @@
-/* Reset & basics */
-* {
-  box-sizing: border-box;
-}
-
+/* Basic styles and center content */
 body, html {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  user-select: none;
 }
 
 .container {
   text-align: center;
   background: white;
   padding: 40px 60px;
-  border-radius: 15px;
-  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
-  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  max-width: 350px;
 }
 
 h1 {
   margin-bottom: 30px;
-  font-size: 2.2rem;
-  color: #d6336c;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: #d93f3f;
 }
 
-.buttons {
+.btn-group {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 30px;
   position: relative;
-  height: 50px; /* so no layout jumps */
 }
 
 .btn {
-  padding: 12px 35px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  padding: 14px 28px;
   border: none;
-  border-radius: 30px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   position: relative;
 }
 
 .yes {
   background-color: #28a745;
   color: white;
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
 }
 
 .yes:hover {
   background-color: #218838;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .no {
   background-color: #dc3545;
   color: white;
+  box-shadow: 0 6px 12px rgba(220, 53, 69, 0.5);
 }
 
 .no:hover {
   background-color: #b02a37;
+  /* no transform, since it moves away */
 }
