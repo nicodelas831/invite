@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>You're Invited 💖</title>
+  <style>
+    body {
+      background: pink;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 20px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+    }
+
+    #no {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Will you go on a date with me? 💕</h1>
+
+  <button onclick="yesClicked()">Yes 😍</button>
+  <button id="no">No 😅</button>
+
+  <script>
+    const noBtn = document.getElementById("no");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    function yesClicked() {
+      window.location.href = "yes.html";
+    }
+  </script>
+
+</body>
+</html>
