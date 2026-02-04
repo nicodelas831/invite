@@ -1,66 +1,115 @@
-/* Basic styles and center content */
-body, html {
-  margin: 0; padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Reset & base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+html, body {
+  height: 100%;
+  background: #ffccd5; /* Soft pink */
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+/* Container: centered with max width and padding */
 .container {
+  max-width: 480px;
+  margin: auto;
+  padding: 30px 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background: white;
-  padding: 40px 60px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  max-width: 350px;
+  position: relative;
+  z-index: 10;
+  user-select: none;
 }
 
 h1 {
-  margin-bottom: 30px;
-  font-weight: 600;
-  font-size: 1.8rem;
-  color: #d93f3f;
+  font-size: 2.2rem;
+  color: #a3003e;
+  margin-bottom: 2rem;
+  font-weight: 700;
 }
 
+/* Button group */
 .btn-group {
   display: flex;
+  gap: 24px;
+  width: 100%;
   justify-content: center;
-  gap: 30px;
   position: relative;
 }
 
 .btn {
-  font-size: 1.1rem;
-  padding: 14px 28px;
-  border: none;
-  border-radius: 50px;
   cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 30px;
+  border: none;
+  color: white;
+  min-width: 110px;
+  transition: transform 0.2s ease;
   user-select: none;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   position: relative;
 }
 
-.yes {
-  background-color: #28a745;
-  color: white;
-  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
+/* Yes button style */
+.btn.yes {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  box-shadow: 0 6px 12px rgba(255, 75, 43, 0.6);
 }
 
-.yes:hover {
-  background-color: #218838;
+/* No button style */
+.btn.no {
+  background: linear-gradient(135deg, #9d0216, #5a0007);
+  box-shadow: 0 6px 12px rgba(157, 2, 22, 0.7);
+}
+
+/* Hover scale effect */
+.btn:hover {
   transform: scale(1.1);
 }
 
-.no {
-  background-color: #dc3545;
-  color: white;
-  box-shadow: 0 6px 12px rgba(220, 53, 69, 0.5);
+/* Floating hearts animation */
+.heart {
+  position: fixed;
+  font-size: 24px;
+  color: #ff4b79;
+  animation-name: floatUp;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  user-select: none;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.8;
 }
 
-.no:hover {
-  background-color: #b02a37;
-  /* no transform, since it moves away */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .btn {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    min-width: 90px;
+  }
 }
