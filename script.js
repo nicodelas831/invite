@@ -1,47 +1,77 @@
 const noBtn = document.getElementById("noBtn");
-const container = document.querySelector(".container");
+const yesBtn = document.getElementById("yesBtn");
+const container = document.querySelector(".btn-group");
 
-noBtn.style.position = "relative";
+// Store button dimensions
+const btnWidth = noBtn.offsetWidth;
+const btnHeight = noBtn.offsetHeight;
 
-noBtn.addEventListener("mouseenter", () => {
+function getRandomOffset(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function moveNoButtonAway(event) {
+  // Get container boundaries relative to viewport
   const containerRect = container.getBoundingClientRect();
+
+  // Get mouse position
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+
+  // Current button position relative to viewport
   const btnRect = noBtn.getBoundingClientRect();
 
-  // Current position relative to container
-  const currentLeft = noBtn.offsetLeft;
-  const currentTop = noBtn.offsetTop;
+  // Calculate distance from mouse to button center
+  const btnCenterX = btnRect.left + btnWidth / 2;
+  const btnCenterY = btnRect.top + btnHeight / 2;
 
-  // Calculate max move distances so button stays inside container
-  const maxLeft = container.clientWidth - noBtn.offsetWidth;
-  const maxTop = container.clientHeight - noBtn.offsetHeight;
+  const deltaX = btnCenterX - mouseX;
+  const deltaY = btnCenterY - mouseY;
 
-  // Calculate a new position that moves the button away from mouse
-  // We'll pick a random position within container, but away from current pos
+  // Amount to move the button away (more distance means bigger move)
+  let moveX = deltaX * 0.5;
+  let moveY = deltaY * 0.5;
 
-  let newLeft, newTop;
-  const safeDistance = 80; // minimum pixels to move
+  // Current button position relative to container
+  const style = window.getComputedStyle(noBtn);
+  const currentLeft = parseFloat(style.left) || 0;
+  const currentTop = parseFloat(style.top) || 0;
 
-  function distance(x1, y1, x2, y2) {
-    return Math.sqrt((x1-x2)**2 + (y1-y2)**2);
+  // Calculate new position (relative to container)
+  let newLeft = currentLeft + moveX;
+  let newTop = currentTop + moveY;
+
+  // Container width/height
+  const containerWidth = container.clientWidth;
+  const containerHeight = container.clientHeight;
+
+  // Clamp the new position so button stays inside container
+  newLeft = Math.min(Math.max(newLeft, 0), containerWidth - btnWidth);
+  newTop = Math.min(Math.max(newTop, 0), containerHeight - btnHeight);
+
+  // Apply new position to button
+  noBtn.style.position = "absolute";
+  noBtn.style.left = newLeft + "px";
+  noBtn.style.top = newTop + "px";
+}
+
+noBtn.addEventListener("mouseenter", (e) => {
+  // Initialize position if not set
+  if (!noBtn.style.left) {
+    noBtn.style.position = "absolute";
+    noBtn.style.left = "0px";
+    noBtn.style.top = "0px";
   }
-
-  // Try 100 times to find a position far enough from current
-  let tries = 0;
-  do {
-    newLeft = Math.random() * maxLeft;
-    newTop = Math.random() * maxTop;
-    tries++;
-  } while(distance(newLeft, newTop, currentLeft, currentTop) < safeDistance && tries < 100);
-
-  // Animate the button to new position smoothly
-  noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
-  noBtn.style.left = `${newLeft}px`;
-  noBtn.style.top = `${newTop}px`;
 });
 
-// Optional: Reset button position when mouse leaves container
-container.addEventListener("mouseleave", () => {
-  noBtn.style.transition = "left 0.5s ease, top 0.5s ease";
-  noBtn.style.left = "0px";
-  noBtn.style.top = "0px";
+noBtn.addEventListener("mousemove", moveNoButtonAway);
+
+yesBtn.addEventListener("click", () => {
+  // Show a cute confirmation message
+  document.body.innerHTML = `
+    <div style="display:flex; justify-content:center; align-items:center; height:100vh; flex-direction: column; background: #fda085;">
+      <h1 style="color: #d93f3f; font-size: 3rem;">Yay! 💖 Can't wait for our date!</h1>
+      <p style="font-size: 1.2rem;">Thanks for saying yes!</p>
+    </div>
+  `;
 });
