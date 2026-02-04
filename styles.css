@@ -1,0 +1,69 @@
+/* Reset & basics */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.container {
+  text-align: center;
+  background: white;
+  padding: 40px 60px;
+  border-radius: 15px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+  max-width: 400px;
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  color: #d6336c;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  position: relative;
+  height: 50px; /* so no layout jumps */
+}
+
+.btn {
+  padding: 12px 35px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.yes {
+  background-color: #28a745;
+  color: white;
+}
+
+.yes:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.no {
+  background-color: #dc3545;
+  color: white;
+}
+
+.no:hover {
+  background-color: #b02a37;
+}
