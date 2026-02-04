@@ -85,7 +85,7 @@ function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  heart.style.fontSize = (Math.random() * 25 + 20) + "px"; // bigger hearts
   heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
   heart.style.animationDelay = "-" + (Math.random() * 4) + "s";
   heart.textContent = "❤️";
@@ -97,7 +97,7 @@ function createHeart() {
   }, 8000);
 }
 
-setInterval(createHeart, 600);
+setInterval(createHeart, 400);
 
 // --- No button avoiding cursor ---
 
@@ -120,15 +120,15 @@ function moveNoButtonAway(event) {
   const distY = cursorY - btnCenterY;
   const distance = Math.sqrt(distX * distX + distY * distY);
 
-  const minDistance = 80; // px, start moving away if cursor closer than this
+  const minDistance = 100; // px, start moving away if cursor closer than this
 
   if (distance < minDistance) {
     // Calculate new position opposite of cursor relative to button center
     const angle = Math.atan2(distY, distX);
     const moveDistance = minDistance - distance;
 
-    let newX = btnRect.left - Math.cos(angle) * moveDistance * 1.5;
-    let newY = btnRect.top - Math.sin(angle) * moveDistance * 1.5;
+    let newX = btnRect.left - Math.cos(angle) * moveDistance * 1.8;
+    let newY = btnRect.top - Math.sin(angle) * moveDistance * 1.8;
 
     // Limit newX and newY within container viewport (with padding)
     const containerRect = container.getBoundingClientRect();
@@ -158,18 +158,51 @@ function resetNoButton() {
 noBtn.addEventListener("mousemove", moveNoButtonAway);
 noBtn.addEventListener("mouseleave", resetNoButton);
 
-// --- Yes button click: show confetti + message ---
+// --- Yes button click: show confetti + next page with CLICK ME ---
 
 yesBtn.addEventListener("click", () => {
   startConfetti();
-  // Disable buttons to prevent multiple clicks
   yesBtn.disabled = true;
   noBtn.disabled = true;
 
-  // Show thank you message after 1.2s
   setTimeout(() => {
     container.innerHTML = `
       <h1>Yay! 💖 Can't wait for our valentine's date!</h1>
+      <button id="clickMeBtn" class="btn yes" style="margin-top:30px;">CLICK ME</button>
     `;
+
+    const clickMeBtn = document.getElementById("clickMeBtn");
+    clickMeBtn.addEventListener("click", () => {
+      showAvailabilityPage();
+    });
   }, 1200);
 });
+
+// --- Show availability selection page ---
+
+function showAvailabilityPage() {
+  container.innerHTML = `
+    <h2>Select your availability<br>Feb 13 - 19, 2026</h2>
+    <div class="availability-container" id="availabilityContainer"></div>
+  `;
+
+  const availabilityContainer = document.getElementById("availabilityContainer");
+
+  // Create buttons for each date
+  const startDate = new Date(2026, 1, 13); // Month is 0-based (1 = Feb)
+  const endDate = new Date(2026, 1, 19);
+
+  for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+
+    const btn = document.createElement('button');
+    btn.className = 'date-button';
+    btn.textContent = dateStr;
+
+    btn.addEventListener('click', () => {
+      alert(`Thanks for selecting ${dateStr}! We'll be in touch soon 💌`);
+    });
+
+    availabilityContainer.appendChild(btn);
+  }
+}
