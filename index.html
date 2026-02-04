@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>You're Invited 💖</title>
+
   <style>
     body {
       background: pink;
       font-family: Arial, sans-serif;
       text-align: center;
       padding-top: 100px;
+      height: 100vh;
+      overflow: hidden;
     }
 
     button {
@@ -22,6 +25,7 @@
 
     #no {
       position: absolute;
+      transition: transform 0.35s ease-out;
     }
   </style>
 </head>
@@ -33,16 +37,33 @@
   <button id="no">No 😅</button>
 
   <script>
-    const btn = document.getElementById("no-button");
+    const btn = document.getElementById("no");
 
-    btn.addEventListener("mouseenter", () => {
-      const maxX = window.innerWidth - btn.offsetWidth;
-      const maxY = window.innerHeight - btn.offsetHeight;
+    document.addEventListener("mousemove", (e) => {
+      const rect = btn.getBoundingClientRect();
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      const btnX = rect.left + rect.width / 2;
+      const btnY = rect.top + rect.height / 2;
 
-      btn.style.transform = `translate(${x}px, ${y}px)`;
+      const dx = btnX - e.clientX;
+      const dy = btnY - e.clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const triggerDistance = 120;
+
+      if (distance < triggerDistance) {
+        const angle = Math.atan2(dy, dx);
+        const moveDistance = 160;
+
+        let x = rect.left + Math.cos(angle) * moveDistance;
+        let y = rect.top + Math.sin(angle) * moveDistance;
+
+        // keep inside screen
+        x = Math.max(0, Math.min(window.innerWidth - rect.width, x));
+        y = Math.max(0, Math.min(window.innerHeight - rect.height, y));
+
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      }
     });
 
     function yesClicked() {
